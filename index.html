@@ -1,411 +1,680 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Remote Control Monitor | Secure Operations Dashboard</title>
+<title>Contact Dashboard</title>
 <style>
-:root{--bg:#0b1020;--panel:#121a2d;--panel2:#19243a;--text:#edf2ff;--muted:#9aa8c4;--line:#293651;--accent:#6c8cff;--green:#35c98b;--red:#ff6577;--yellow:#ffc857}
+:root {
+  --bg:#080e1b;
+  --panel:#111b2d;
+  --panel2:#16233a;
+  --line:#263550;
+  --text:#f2f6ff;
+  --muted:#91a1bb;
+  --blue:#3985ff;
+  --cyan:#38d5e8;
+  --green:#35cf91;
+  --red:#f06b79;
+}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font:15px Arial,sans-serif}
-button,input,textarea{font:inherit}
-button{cursor:pointer;border:0;border-radius:9px;padding:11px 15px;background:var(--accent);color:white;font-weight:700}
-button:hover{filter:brightness(1.1)}
-button.secondary{background:#26344f}
-button.danger{background:#b83b52}
-button.success{background:#16865e}
-input,textarea{width:100%;padding:12px;border-radius:8px;border:1px solid var(--line);background:#0c1425;color:var(--text);margin:7px 0 13px}
-textarea{min-height:120px;resize:vertical}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
+}
+button,input{font:inherit}
+button{cursor:pointer}
 .hidden{display:none!important}
-.muted{color:var(--muted)}
-.small{font-size:12px}
-#login{min-height:100vh;display:grid;place-items:center;padding:20px}
-.login-card{width:min(420px,100%);background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:28px;box-shadow:0 0 0 1px rgba(108,140,255,.12)}
-.brand{font-size:23px;font-weight:800;letter-spacing:.5px}
-.brand span{color:var(--accent)}
-#app{min-height:100vh}
-header{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:18px 24px;border-bottom:1px solid var(--line);background:#0d1425;flex-wrap:wrap}
-.header-left{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-.header-right{display:flex;align-items:center;gap:10px}
-.profile-box{display:flex;align-items:center;gap:12px;padding:10px 14px;border:1px solid var(--line);border-radius:12px;background:rgba(18,26,45,.9);box-shadow:0 10px 20px rgba(0,0,0,.12)}
-.avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),#8d7dff);color:white;font-weight:800;font-size:14px}
-.profile-name{font-weight:700;color:#f2f5ff;line-height:1.2}
-.profile-phone{color:var(--muted);text-decoration:none;font-size:13px}
-.profile-phone:hover{text-decoration:underline}
-.profile-tag{display:inline-block;margin-top:4px;padding:4px 8px;border-radius:999px;background:#1f2c46;color:#cfe0ff;font-size:10px;letter-spacing:.08em;text-transform:uppercase}
-.layout{display:grid;grid-template-columns:225px 1fr;min-height:calc(100vh - 72px)}
-nav{padding:18px 12px;border-right:1px solid var(--line);background:#0d1425}
-nav button{width:100%;text-align:left;margin-bottom:7px;background:transparent;color:var(--muted)}
-nav button.active,nav button:hover{background:var(--panel2);color:white}
-main{padding:25px;min-width:0}
-.page{display:none}
-.page.active{display:block}
-h1{font-size:26px;margin:0 0 8px}
-h2{font-size:18px;margin:0 0 14px}
-.subheading{color:var(--muted);margin-bottom:24px}
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;min-width:0}
-.stat{font-size:27px;font-weight:800;margin:12px 0 4px}
-.row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-.stack{display:flex;gap:8px;flex-wrap:wrap}
-.badge{display:inline-block;padding:5px 9px;border-radius:20px;background:#26344f;color:#c8d5f5;font-size:12px}
-.badge.green{background:#123d32;color:#7ce8bd}
-.badge.yellow{background:#4b3b1a;color:#ffda85}
-.badge.red{background:#4b202d;color:#ff9baa}
-.section-gap{margin-top:20px}
-.list{display:grid;gap:10px}
-.list-item{padding:14px;border:1px solid var(--line);border-radius:10px;background:#10192b}
-.empty{padding:24px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:10px}
-.note{white-space:pre-wrap;overflow-wrap:anywhere}
-.overlay{position:fixed;inset:0;background:#000a;display:none;place-items:center;padding:18px;z-index:10}
-.overlay.open{display:grid}
-.modal{width:min(520px,100%);max-height:90vh;overflow:auto;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px}
-.modal h2{margin-bottom:10px}
-.notice{border:1px solid #765c27;background:#352a18;color:#ffdf9a;border-radius:10px;padding:13px;margin:14px 0}
-footer{padding:20px;color:var(--muted);font-size:12px;text-align:center}
-@media(max-width:850px){.layout{grid-template-columns:1fr}nav{display:flex;overflow:auto;gap:6px;border-right:0;border-bottom:1px solid var(--line);padding:10px}nav button{white-space:nowrap;width:auto;margin-bottom:0}main{padding:18px}}
-@media(max-width:520px){.grid{grid-template-columns:1fr}header{padding:15px}.header-left{width:100%}.profile-box{width:100%}h1{font-size:23px}}
+
+/* LOGIN */
+.login-screen{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:22px;
+  background:
+    radial-gradient(circle at 20% 15%,#183c70 0,transparent 35%),
+    radial-gradient(circle at 85% 80%,#142b50 0,transparent 35%),
+    var(--bg);
+}
+.login-card{
+  width:100%;
+  max-width:410px;
+  padding:36px;
+  background:rgba(17,27,45,.96);
+  border:1px solid var(--line);
+  border-radius:20px;
+  box-shadow:0 25px 80px #0008;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:32px;
+}
+.brand-icon{
+  width:45px;height:45px;
+  display:grid;place-items:center;
+  border-radius:13px;
+  background:linear-gradient(135deg,var(--blue),var(--cyan));
+  color:white;font-size:22px;font-weight:bold;
+}
+.brand-name{font-size:19px;font-weight:700}
+.login-card h1{font-size:27px;margin:0 0 25px}
+.field{margin-bottom:18px}
+.field label{
+  display:block;
+  color:var(--muted);
+  font-size:13px;
+  margin-bottom:8px;
+}
+.field input{
+  width:100%;
+  padding:14px;
+  background:#0b1424;
+  color:white;
+  border:1px solid var(--line);
+  border-radius:10px;
+  outline:none;
+}
+.field input:focus{border-color:var(--blue)}
+.password-wrap{position:relative}
+.password-wrap input{padding-right:70px}
+.show-password{
+  position:absolute;
+  right:10px;top:50%;
+  transform:translateY(-50%);
+  border:0;background:none;
+  color:var(--cyan);font-size:12px;
+}
+.primary-btn{
+  width:100%;
+  padding:14px;
+  border:0;
+  border-radius:10px;
+  background:linear-gradient(100deg,var(--blue),#2365d8);
+  color:white;font-weight:700;
+}
+.login-error{
+  min-height:18px;
+  color:#ff8490;
+  font-size:13px;
+  margin:12px 0 0;
+}
+
+/* DASHBOARD */
+.app{min-height:100vh}
+.sidebar{
+  position:fixed;
+  left:0;top:0;bottom:0;
+  width:245px;
+  padding:25px 17px;
+  background:#0d1728;
+  border-right:1px solid var(--line);
+  z-index:5;
+}
+.sidebar .brand{margin:0 0 38px 5px}
+.nav-label{
+  color:#71829d;
+  font-size:10px;
+  letter-spacing:1.5px;
+  padding:0 12px;
+  margin-bottom:12px;
+}
+.nav-btn{
+  width:100%;
+  padding:13px 14px;
+  margin-bottom:7px;
+  border:1px solid transparent;
+  border-radius:10px;
+  background:transparent;
+  color:#aab8ce;
+  text-align:left;
+  display:flex;
+  gap:12px;
+  align-items:center;
+}
+.nav-btn:hover,.nav-btn.active{
+  background:#172b48;
+  color:white;
+  border-color:#29476d;
+}
+.nav-icon{width:20px;text-align:center}
+.sidebar-bottom{
+  position:absolute;
+  bottom:22px;left:17px;right:17px;
+}
+.logout-btn{
+  width:100%;
+  padding:12px;
+  border:1px solid var(--line);
+  background:#172236;
+  color:#dce7f8;
+  border-radius:10px;
+}
+.main{
+  margin-left:245px;
+  padding:30px;
+  max-width:1600px;
+}
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  margin-bottom:28px;
+}
+.topbar h1{font-size:25px;margin:0}
+.top-actions{display:flex;gap:10px;align-items:center}
+.icon-btn{
+  border:1px solid var(--line);
+  background:var(--panel);
+  color:white;
+  border-radius:10px;
+  padding:10px 13px;
+}
+.content-grid{
+  display:grid;
+  grid-template-columns:repeat(12,minmax(0,1fr));
+  gap:18px;
+}
+.card{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:15px;
+  padding:20px;
+  min-width:0;
+}
+.span-12{grid-column:span 12}
+.span-8{grid-column:span 8}
+.span-7{grid-column:span 7}
+.span-6{grid-column:span 6}
+.span-5{grid-column:span 5}
+.span-4{grid-column:span 4}
+.card h2{font-size:16px;margin:0 0 19px}
+.profile-row{
+  display:flex;align-items:center;gap:17px;
+}
+.avatar{
+  width:58px;height:58px;
+  display:grid;place-items:center;
+  border-radius:16px;
+  background:linear-gradient(135deg,#2868c8,#36b8d2);
+  font-size:22px;font-weight:700;
+}
+.profile-name{font-size:19px;font-weight:700}
+.profile-number{color:var(--muted);font-size:13px;margin-top:6px}
+.status{
+  display:inline-flex;align-items:center;gap:7px;
+  color:var(--green);font-size:12px;
+  padding:7px 10px;
+  background:#15382f;border-radius:30px;
+}
+.dot{width:7px;height:7px;border-radius:50%;background:currentColor}
+.info-list{display:grid;gap:0}
+.info-item{
+  display:flex;justify-content:space-between;
+  gap:15px;padding:13px 0;
+  border-bottom:1px solid var(--line);
+  font-size:13px;
+}
+.info-item:last-child{border-bottom:0}
+.info-item span:first-child{color:var(--muted)}
+.info-item span:last-child{text-align:right;overflow-wrap:anywhere}
+.contact-search{
+  width:100%;padding:12px 14px;
+  background:#0b1424;color:white;
+  border:1px solid var(--line);
+  border-radius:9px;margin-bottom:15px;
+  outline:none;
+}
+.contact-list{display:grid;gap:9px}
+.contact-item{
+  display:flex;align-items:center;gap:12px;
+  padding:13px;border-radius:10px;
+  border:1px solid var(--line);
+  background:#0e192b;
+  cursor:pointer;
+}
+.contact-item:hover,.contact-item.selected{
+  border-color:var(--blue);
+  background:#172b48;
+}
+.contact-avatar{
+  width:38px;height:38px;
+  display:grid;place-items:center;
+  background:#263f65;border-radius:11px;
+  font-weight:700;
+}
+.contact-details{flex:1;min-width:0}
+.contact-details strong{display:block;font-size:13px}
+.contact-details small{display:block;color:var(--muted);margin-top:5px}
+.contact-arrow{color:var(--muted)}
+.activity-list{display:grid;gap:0}
+.activity-item{
+  display:flex;gap:13px;
+  padding:13px 0;border-bottom:1px solid var(--line);
+}
+.activity-item:last-child{border:0}
+.activity-icon{
+  width:35px;height:35px;flex-shrink:0;
+  display:grid;place-items:center;
+  background:#1c3150;border-radius:10px;
+}
+.activity-item strong{font-size:13px}
+.activity-item small{display:block;color:var(--muted);margin-top:5px}
+.location-address{
+  padding:17px;background:#0c1728;
+  border:1px solid var(--line);
+  border-radius:11px;font-size:14px;
+  line-height:1.6;
+}
+.location-status{
+  display:flex;align-items:center;gap:9px;
+  margin-top:15px;color:var(--muted);
+  font-size:13px;
+}
+.copy-btn{
+  padding:8px 11px;
+  color:var(--cyan);
+  background:#142b43;
+  border:1px solid #285273;
+  border-radius:8px;
+  font-size:12px;
+}
+.empty-state{
+  padding:25px;text-align:center;
+  color:var(--muted);font-size:13px;
+}
+.mobile-nav{display:none}
+
+/* MOBILE */
+@media(max-width:900px){
+  .sidebar{display:none}
+  .main{margin-left:0;padding:22px 16px 90px}
+  .mobile-nav{
+    display:flex;position:fixed;bottom:0;left:0;right:0;
+    z-index:10;background:#0d1728;
+    border-top:1px solid var(--line);
+    justify-content:space-around;padding:9px 4px;
+  }
+  .mobile-nav button{
+    border:0;background:none;color:#91a1bb;
+    display:flex;flex-direction:column;gap:4px;
+    align-items:center;font-size:10px;padding:5px;
+  }
+  .mobile-nav button.active{color:var(--cyan)}
+  .span-8,.span-7,.span-6,.span-5,.span-4{grid-column:span 12}
+}
+@media(max-width:480px){
+  .login-card{padding:25px}
+  .topbar h1{font-size:21px}
+  .card{padding:16px}
+  .profile-name{font-size:16px}
+  .top-actions .icon-btn{padding:9px}
+}
 </style>
 </head>
 <body>
 
-<section id="login">
+<section class="login-screen" id="loginScreen">
   <div class="login-card">
-    <div class="brand">Remote<span>Control</span></div>
-    <p class="muted">Secure operations dashboard</p>
+    <div class="brand">
+      <div class="brand-icon">C</div>
+      <div class="brand-name">Contact Dashboard</div>
+    </div>
+    <h1>Sign in</h1>
     <form id="loginForm">
-      <label for="email">Email or username</label>
-      <input id="email" autocomplete="username" required placeholder="Enter your username">
-      <label for="password">Password</label>
-      <input id="password" type="password" autocomplete="current-password" required placeholder="Enter your password">
-      <button type="submit" style="width:100%">Sign in</button>
-      <p id="loginError" class="small" style="color:var(--red)"></p>
+      <div class="field">
+        <label for="email">Email address</label>
+        <input id="email" type="email" autocomplete="username"
+          placeholder="Email address" required>
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <div class="password-wrap">
+          <input id="password" type="password"
+            autocomplete="current-password" placeholder="Password" required>
+          <button class="show-password" type="button"
+            id="togglePassword">Show</button>
+        </div>
+      </div>
+      <button class="primary-btn" type="submit">Sign in</button>
+      <div class="login-error" id="loginError"></div>
     </form>
-    <p class="muted small">For production use, connect this form to a secure server-side authentication flow.</p>
   </div>
 </section>
 
-<div id="app" class="hidden">
-  <header>
-    <div class="header-left">
-      <div class="brand">Remote<span>Control</span></div>
-      <div class="profile-box" aria-label="Profile information">
-        <div class="avatar">EM</div>
-        <div>
-          <div class="profile-name">Esther Merel</div>
-          <a class="profile-phone" href="tel:+19175364180">+1 (917) 536-4180</a>
-          <div class="profile-tag">Web Agent</div>
+<div class="app hidden" id="dashboard">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-icon">C</div>
+      <div class="brand-name">Contact Dashboard</div>
+    </div>
+    <div class="nav-label">MENU</div>
+    <button class="nav-btn active" data-page="overview">
+      <span class="nav-icon">▦</span> Overview
+    </button>
+    <button class="nav-btn" data-page="contacts">
+      <span class="nav-icon">♙</span> Contacts
+    </button>
+    <button class="nav-btn" data-page="activity">
+      <span class="nav-icon">◷</span> Activity
+    </button>
+    <button class="nav-btn" data-page="location">
+      <span class="nav-icon">⌖</span> Location
+    </button>
+    <div class="sidebar-bottom">
+      <button class="logout-btn" onclick="logout()">↪ &nbsp; Sign out</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <h1 id="pageTitle">Overview</h1>
+      <div class="top-actions">
+        <button class="icon-btn" onclick="showPage('contacts')">Contacts</button>
+        <button class="icon-btn" onclick="logout()">Sign out</button>
+      </div>
+    </header>
+
+    <section id="page-overview" class="page">
+      <div class="content-grid">
+        <div class="card span-7">
+          <h2>Primary Contact</h2>
+          <div class="profile-row">
+            <div class="avatar">C</div>
+            <div>
+              <div class="profile-name">Casey Kevin Behan Nicole</div>
+              <div class="profile-number">+1 (859) 640-1796</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card span-5">
+          <h2>Contact Status</h2>
+          <div class="info-list">
+            <div class="info-item">
+              <span>Profile</span><span>Active</span>
+            </div>
+            <div class="info-item">
+              <span>Carrier</span><span>Celico Partnership DBA Verizon</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card span-6">
+          <h2>Contact Information</h2>
+          <div class="info-list">
+            <div class="info-item">
+              <span>Name</span><span>Casey Kevin Behan Nicole</span>
+            </div>
+            <div class="info-item">
+              <span>Phone</span><span>+1 (859) 640-1796</span>
+            </div>
+            <div class="info-item">
+              <span>Carrier</span><span>Celico Partnership DBA Verizon</span>
+            </div>
+            <div class="info-item">
+              <span>Location</span><span>Covington, Kentucky, United States</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card span-6">
+          <h2>Location Details</h2>
+          <div class="location-address">
+            United States, Kentucky, Covington
+          </div>
+          <div class="location-status">
+            <span class="dot"></span>
+            Live location not connected
+          </div>
+        </div>
+
+        <div class="card span-12">
+          <h2>Recent Activity</h2>
+          <div class="activity-list" id="overviewActivity"></div>
         </div>
       </div>
-    </div>
-    <div class="header-right">
-      <span class="badge green">Operational</span>
-      <button class="secondary" id="logoutBtn">Log out</button>
-    </div>
-  </header>
+    </section>
 
-  <div class="layout">
-    <nav id="navigation">
-      <button class="active" data-page="overview">Overview</button>
-      <button data-page="devices">Devices</button>
-      <button data-page="messages">Messages</button>
-      <button data-page="notes">Notes</button>
-      <button data-page="actions">Action Center</button>
-      <button data-page="settings">Settings</button>
-    </nav>
-
-    <main>
-      <section id="overview" class="page active">
-        <h1>Operations Overview</h1>
-        <p class="subheading">Monitor endpoints, messages, and operational status across the workspace.</p>
-        <div class="grid">
-          <div class="card"><div class="muted">Connected devices</div><div class="stat" id="deviceCount">2</div><span class="badge">Active endpoints</span></div>
-          <div class="card"><div class="muted">Recent activity</div><div class="stat" id="messageCount">0</div><span class="badge">Messages reviewed</span></div>
-          <div class="card"><div class="muted">Workspace status</div><div class="stat" style="font-size:22px">Online</div><span class="badge green">Secure</span></div>
+    <section id="page-contacts" class="page hidden">
+      <div class="content-grid">
+        <div class="card span-5">
+          <h2>Contacts</h2>
+          <input class="contact-search" id="contactSearch"
+            placeholder="Search contacts">
+          <div class="contact-list" id="contactList"></div>
         </div>
-        <div class="card section-gap">
-          <h2>Quick actions</h2>
-          <div class="stack">
-            <button data-goto="messages">Open messages</button>
-            <button data-goto="notes" class="secondary">Create note</button>
-            <button data-goto="actions" class="secondary">Open action center</button>
+        <div class="card span-7">
+          <h2>Contact Details</h2>
+          <div id="selectedContact">
+            <div class="empty-state">Select a contact</div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section id="devices" class="page">
-        <h1>Devices</h1>
-        <p class="subheading">Managed endpoints and current operational status.</p>
-        <div class="grid">
-          <div class="card">
-            <div class="row"><h2>Android Unit</h2><span class="badge green">Online</span></div>
-            <p class="muted">Device ID: RCM-001</p>
-            <p>Battery: 82%</p><p>Storage: 128 GB</p>
-            <button class="secondary" onclick="showDeviceInfo()">View details</button>
+    <section id="page-activity" class="page hidden">
+      <div class="content-grid">
+        <div class="card span-12">
+          <h2>Activity</h2>
+          <div class="activity-list" id="fullActivity"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="page-location" class="page hidden">
+      <div class="content-grid">
+        <div class="card span-7">
+          <h2>Location Details</h2>
+          <div class="info-list">
+            <div class="info-item">
+              <span>Contact</span><span>Casey Kevin Behan Nicole</span>
+            </div>
+            <div class="info-item">
+              <span>Phone</span><span>+1 (859) 640-1796</span>
+            </div>
+            <div class="info-item">
+              <span>Carrier</span><span>Celico Partnership DBA Verizon</span>
+            </div>
           </div>
-          <div class="card">
-            <div class="row"><h2>iPhone Unit</h2><span class="badge">Connected</span></div>
-            <p class="muted">Device ID: RCM-002</p>
-            <p>Battery: 67%</p><p>Storage: 256 GB</p>
-            <button class="secondary" onclick="showDeviceInfo()">View details</button>
+        </div>
+        <div class="card span-5">
+          <h2>Address</h2>
+          <div class="location-address">
+            United States, Kentucky, Covington
+          </div>
+          <div class="location-status">
+            <span class="dot"></span>
+            Live location not connected
           </div>
         </div>
-      </section>
+      </div>
+    </section>
+  </main>
 
-      <section id="messages" class="page">
-        <h1>Messages</h1>
-        <p class="subheading">Review recent communications and operational updates.</p>
-        <div class="stack">
-          <button id="refreshMessages">Refresh feed</button>
-          <button class="secondary" data-goto="notes">Open note</button>
-        </div>
-        <div id="messageList" class="list section-gap">
-          <div class="empty">No messages loaded. Press Refresh to load the latest activity.</div>
-        </div>
-      </section>
-
-      <section id="notes" class="page">
-        <h1>Operational Notes</h1>
-        <p class="subheading">Capture internal notes for the current session.</p>
-        <div class="card">
-          <label for="noteTitle">Note title</label>
-          <input id="noteTitle" placeholder="e.g. Deployment checklist">
-          <label for="noteText">Message note</label>
-          <textarea id="noteText" placeholder="Type your note here..."></textarea>
-          <div class="stack">
-            <button id="saveNote">Save note</button>
-            <button class="secondary" id="clearNote">Clear fields</button>
-          </div>
-          <p id="noteStatus" class="muted small"></p>
-        </div>
-        <div class="section-gap">
-          <h2>Saved notes</h2>
-          <div id="savedNotes" class="list"><div class="empty">No notes saved yet.</div></div>
-        </div>
-      </section>
-
-      <section id="actions" class="page">
-        <h1>Action Center</h1>
-        <p class="subheading">Operational actions, alerts, and system updates.</p>
-        <div class="card">
-          <div class="row">
-            <div><h2>Live activity feed</h2><p class="muted">Review the latest updates before the next workflow cycle.</p></div>
-            <button id="actionRefresh">Refresh</button>
-          </div>
-          <div id="actionMessageList" class="list section-gap"><div class="empty">No messages loaded.</div></div>
-        </div>
-        <div class="card section-gap">
-          <h2>System notice</h2>
-          <p class="muted">Your team is operating within the normal service window. No intervention is required.</p>
-          <button class="danger" id="viewWarning">Review notification</button>
-        </div>
-      </section>
-
-      <section id="settings" class="page">
-        <h1>Settings</h1>
-        <p class="subheading">Workspace and security preferences.</p>
-        <div class="card">
-          <h2>Workspace</h2>
-          <p>Environment: <span class="badge yellow">Production</span></p>
-          <p>Data storage: Encrypted session cache</p>
-          <p class="muted">Changes are retained for this browser session only.</p>
-          <button class="secondary" id="clearWorkspaceData">Clear local messages and notes</button>
-        </div>
-      </section>
-    </main>
-  </div>
-  <footer>Remote Control Monitor · Secure operations dashboard</footer>
-</div>
-
-<div class="overlay" id="warningModal" role="dialog" aria-modal="true" aria-labelledby="warningTitle">
-  <div class="modal">
-    <div class="row"><h2 id="warningTitle">Operational notice</h2><button class="secondary" data-close="warningModal">Close</button></div>
-    <div class="notice">Maintenance window approved for 22:00 UTC. Review the device checklist before the next sync cycle.</div>
-    <p class="muted">This update outlines scheduling and workflow status for operational planning and service continuity oversight.</p>
-    <div class="stack">
-      <button id="acknowledgeAlert">Acknowledge</button>
-      <button class="secondary" data-close="warningModal">Dismiss</button>
-    </div>
-  </div>
-</div>
-
-<div class="overlay" id="infoModal" role="dialog" aria-modal="true" aria-labelledby="infoTitle">
-  <div class="modal">
-    <div class="row"><h2 id="infoTitle">Device details</h2><button class="secondary" data-close="infoModal">Close</button></div>
-    <p>This record includes operational metadata for a managed endpoint and its current service state.</p>
-  </div>
+  <nav class="mobile-nav">
+    <button class="active" data-page="overview"><span>▦</span>Overview</button>
+    <button data-page="contacts"><span>♙</span>Contacts</button>
+    <button data-page="activity"><span>◷</span>Activity</button>
+    <button data-page="location"><span>⌖</span>Location</button>
+  </nav>
 </div>
 
 <script>
-const APP_USERNAME = "admin";
-const APP_PASSWORD = "admin123";
+const LOGIN_EMAIL = "gianny.andrade@gmail.com";
+const LOGIN_PASSWORD = "Remoteaccess";
 
-const operationalMessages = [
-  "Hey bestie, I just got your message and I’m smiling already.",
-  "You mean a lot to me, and I’m so grateful for your love and support.",
-  "My heart still feels warm whenever I think about us.",
-  "I miss you more than words can say, babe.",
-  "Let’s plan a date night soon — just us, no stress, no rush.",
-  "You are my favorite person to talk to at the end of the day.",
-  "I love the way you make everything feel easier and brighter.",
-  "Good morning, beautiful. I hope your day is as lovely as your smile.",
-  "I’m thinking about you and I just wanted to say I love you.",
-  "You and I make a perfect team, in love and in life.",
-  "Hey love, I hope you’re having an amazing day.",
-  "My favorite part of the day is hearing from you.",
-  "I can’t stop thinking about our next adventure together.",
-  "You make my world feel calmer, happier, and full of love.",
-  "Just a reminder: I’m always here for you.",
-  "Business update: the new partnership proposal is moving forward smoothly.",
-  "Client follow-up: we’re finalizing the next steps for the agreement.",
-  "Team update: the project is on schedule and progressing well.",
-  "Leadership note: the new business opportunity looks promising.",
-  "Sales check-in: conversations with partners have been positive so far.",
-  "Work update: the call went well and the next meeting is confirmed.",
-  "Friendship note: I’m always here when you need me.",
-  "We should catch up soon — I miss our conversations.",
-  "You’re such a good friend, and I’m lucky to have you in my life.",
-  "Let’s grab coffee and talk about everything soon.",
-  "You make life feel lighter and more fun just by being you.",
-  "Lovers note: our connection keeps getting stronger every day.",
-  "No matter what, I feel lucky to have you by my side.",
-  "You are my peace, my happiness, and my favorite person.",
-  "Girlfriend update: I’m proud of you and grateful to have you in my life."
+const contacts = [
+  {
+    name:"Casey Kevin Behan Nicole",
+    phone:"+1 (859) 640-1796",
+    carrier:"Celico Partnership DBA Verizon",
+    address:"United States, Kentucky, Covington"
+  },
+  {
+    name:"Benjamin Merel",
+    phone:"",
+    carrier:"",
+    address:""
+  },
+  {
+    name:"Abigail Merel Tamir",
+    phone:"",
+    carrier:"",
+    address:""
+  },
+  {
+    name:"Abigail Merel-Tamir",
+    phone:"",
+    carrier:"",
+    address:""
+  },
+  {
+    name:"Leah Scharf",
+    phone:"",
+    carrier:"",
+    address:""
+  },
+  {
+    name:"Bryan Charles",
+    phone:"",
+    carrier:"",
+    address:""
+  }
 ];
 
-let messages = [];
-let notes = [];
+const activity = [
+  {icon:"♙",title:"Contact profile opened",time:"Recent"},
+  {icon:"⌖",title:"Location details viewed",time:"Recent"},
+  {icon:"▤",title:"Contact information viewed",time:"Recent"}
+];
 
-const $ = id => document.getElementById(id);
+function login(email,password){
+  return email.trim().toLowerCase() === LOGIN_EMAIL.toLowerCase()
+    && password === LOGIN_PASSWORD;
+}
 
-$("loginForm").addEventListener("submit", event => {
-  event.preventDefault();
-  const user = $("email").value.trim();
-  const pass = $("password").value;
-  if ((user === APP_USERNAME || user === "admin@remote-control.local") && pass === APP_PASSWORD) {
-    $("login").classList.add("hidden");
-    $("app").classList.remove("hidden");
-    $("loginError").textContent = "";
-  } else {
-    $("loginError").textContent = "Incorrect username or password.";
+document.getElementById("loginForm").addEventListener("submit",function(e){
+  e.preventDefault();
+  const email=document.getElementById("email").value;
+  const password=document.getElementById("password").value;
+  if(login(email,password)){
+    document.getElementById("loginError").textContent="";
+    document.getElementById("loginScreen").classList.add("hidden");
+    document.getElementById("dashboard").classList.remove("hidden");
+    renderActivity();
+    renderContacts();
+  }else{
+    document.getElementById("loginError").textContent="Incorrect email or password.";
   }
 });
 
-$("logoutBtn").addEventListener("click", () => {
-  $("app").classList.add("hidden");
-  $("login").classList.remove("hidden");
-  $("password").value = "";
+document.getElementById("togglePassword").addEventListener("click",function(){
+  const field=document.getElementById("password");
+  const visible=field.type==="text";
+  field.type=visible?"password":"text";
+  this.textContent=visible?"Show":"Hide";
 });
 
-function goToPage(pageId) {
-  document.querySelectorAll(".page").forEach(page => page.classList.toggle("active", page.id === pageId));
-  document.querySelectorAll("#navigation button").forEach(button => button.classList.toggle("active", button.dataset.page === pageId));
-  window.scrollTo({top:0, behavior:"smooth"});
+function logout(){
+  document.getElementById("dashboard").classList.add("hidden");
+  document.getElementById("loginScreen").classList.remove("hidden");
+  document.getElementById("loginForm").reset();
+  document.getElementById("loginError").textContent="";
 }
 
-document.querySelectorAll("#navigation button").forEach(button => {
-  button.addEventListener("click", () => goToPage(button.dataset.page));
+function showPage(page){
+  document.querySelectorAll(".page").forEach(el=>el.classList.add("hidden"));
+  document.getElementById("page-"+page).classList.remove("hidden");
+  document.querySelectorAll("[data-page]").forEach(btn=>{
+    btn.classList.toggle("active",btn.dataset.page===page);
+  });
+  const titles={
+    overview:"Overview",
+    contacts:"Contacts",
+    activity:"Activity",
+    location:"Location"
+  };
+  document.getElementById("pageTitle").textContent=titles[page];
+}
+
+document.querySelectorAll("[data-page]").forEach(btn=>{
+  btn.addEventListener("click",()=>showPage(btn.dataset.page));
 });
-document.querySelectorAll("[data-goto]").forEach(button => {
-  button.addEventListener("click", () => goToPage(button.dataset.goto));
-});
 
-function randomMessages(count = 5) {
-  const pool = [...operationalMessages].sort(() => Math.random() - 0.5);
-  return pool.slice(0, count).map((text, index) => ({
-    id: Date.now() + index + Math.random(),
-    text,
-    time: new Date().toLocaleString()
-  }));
+function renderActivity(){
+  const html=activity.map(item=>`
+    <div class="activity-item">
+      <div class="activity-icon">${item.icon}</div>
+      <div>
+        <strong>${item.title}</strong>
+        <small>${item.time}</small>
+      </div>
+    </div>
+  `).join("");
+  document.getElementById("overviewActivity").innerHTML=html;
+  document.getElementById("fullActivity").innerHTML=html;
 }
 
-function renderMessages() {
-  $("messageCount").textContent = messages.length;
-  const markup = messages.map((message, index) => `
-    <div class="list-item">
-      <div class="row"><span class="badge">Entry ${index + 1}</span><span class="muted small">${escapeHTML(message.time)}</span></div>
-      <p class="note">${escapeHTML(message.text)}</p>
-      <button class="danger small" onclick="viewMessageWarning()">View</button>
-    </div>`).join("");
-  const empty = '<div class="empty">No messages loaded. Press Refresh to load the latest activity.</div>';
-  $("messageList").innerHTML = markup || empty;
-  $("actionMessageList").innerHTML = markup || '<div class="empty">No messages loaded.</div>';
-}
-
-function refreshMessages() {
-  messages = randomMessages(5);
-  renderMessages();
-}
-
-$("refreshMessages").addEventListener("click", refreshMessages);
-$("actionRefresh").addEventListener("click", refreshMessages);
-
-function escapeHTML(value) {
-  return String(value).replace(/[&<>"']/g, char => ({
-    "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
-  }[char]));
-}
-
-$("saveNote").addEventListener("click", () => {
-  const title = $("noteTitle").value.trim();
-  const text = $("noteText").value.trim();
-  if (!title && !text) {
-    $("noteStatus").textContent = "Enter a title or note before saving.";
+function renderContacts(filter=""){
+  const list=document.getElementById("contactList");
+  const filtered=contacts.filter(c=>
+    c.name.toLowerCase().includes(filter.toLowerCase()) ||
+    c.phone.includes(filter)
+  );
+  if(!filtered.length){
+    list.innerHTML='<div class="empty-state">No contacts found</div>';
     return;
   }
-  notes.unshift({title:title || "Untitled note", text, time:new Date().toLocaleString()});
-  renderNotes();
-  $("noteStatus").textContent = "Note saved for this session.";
-  $("noteTitle").value = "";
-  $("noteText").value = "";
-});
-
-$("clearNote").addEventListener("click", () => {
-  $("noteTitle").value = "";
-  $("noteText").value = "";
-  $("noteStatus").textContent = "";
-});
-
-function renderNotes() {
-  $("savedNotes").innerHTML = notes.map(note => `
-    <div class="list-item">
-      <div class="row"><strong>${escapeHTML(note.title)}</strong><span class="muted small">${escapeHTML(note.time)}</span></div>
-      <p class="note">${escapeHTML(note.text)}</p>
-    </div>`).join("") || '<div class="empty">No notes saved yet.</div>';
+  list.innerHTML=filtered.map((c)=>{
+    const index=contacts.indexOf(c);
+    return `
+      <div class="contact-item" onclick="selectContact(${index})">
+        <div class="contact-avatar">${c.name.charAt(0)}</div>
+        <div class="contact-details">
+          <strong>${c.name}</strong>
+          <small>${c.phone || "—"}</small>
+        </div>
+        <span class="contact-arrow">›</span>
+      </div>
+    `;
+  }).join("");
 }
 
-function openModal(id) { $(id).classList.add("open"); }
-function closeModal(id) { $(id).classList.remove("open"); }
+function selectContact(index){
+  const c=contacts[index];
+  document.getElementById("selectedContact").innerHTML=`
+    <div class="profile-row" style="margin-bottom:22px">
+      <div class="avatar">${c.name.charAt(0)}</div>
+      <div><div class="profile-name">${c.name}</div></div>
+    </div>
+    <div class="info-list">
+      <div class="info-item"><span>Name</span><span>${c.name}</span></div>
+      <div class="info-item"><span>Phone</span><span>${c.phone || "—"}</span></div>
+      <div class="info-item"><span>Carrier</span><span>${c.carrier || "—"}</span></div>
+      <div class="info-item"><span>Address</span><span>${c.address || "—"}</span></div>
+    </div>
+    ${c.phone ? `<button class="copy-btn" style="margin-top:16px"
+      onclick="copyPhone('${c.phone}')">Copy phone number</button>` : ""}
+  `;
+}
 
-document.querySelectorAll("[data-close]").forEach(button => {
-  button.addEventListener("click", () => closeModal(button.dataset.close));
+function copyPhone(phone){
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(phone);
+  }
+}
+
+document.getElementById("contactSearch").addEventListener("input",function(){
+  renderContacts(this.value);
 });
-document.querySelectorAll(".overlay").forEach(overlay => {
-  overlay.addEventListener("click", event => {
-    if (event.target === overlay) overlay.classList.remove("open");
-  });
-});
-
-function viewMessageWarning() { openModal("warningModal"); }
-$("viewWarning").addEventListener("click", viewMessageWarning);
-$("acknowledgeAlert").addEventListener("click", () => {
-  closeModal("warningModal");
-  $("noteStatus").textContent = "Operational notice acknowledged.";
-});
-
-function showDeviceInfo() { openModal("infoModal"); }
-
-$("clearWorkspaceData").addEventListener("click", () => {
-  messages = [];
-  notes = [];
-  renderMessages();
-  renderNotes();
-  $("noteStatus").textContent = "";
-  alert("Workspace data cleared.");
-});
-
-renderMessages();
-renderNotes();
 </script>
 </body>
 </html>
