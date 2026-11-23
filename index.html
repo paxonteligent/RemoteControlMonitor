@@ -1,884 +1,119 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contact Dashboard</title>
+<title>chzter • Instagram Profile</title>
 <style>
-:root {
-  --bg:#080e1b;
-  --panel:#111b2d;
-  --line:#283752;
-  --text:#f3f6ff;
-  --muted:#94a4bc;
-  --blue:#3985ff;
-  --cyan:#38d5e8;
-  --red:#ff7887;
-}
 *{box-sizing:border-box}
-body{
-  margin:0;
-  background:var(--bg);
-  color:var(--text);
-  font-family:Arial,Helvetica,sans-serif;
-}
-button,input{font:inherit}
-button{cursor:pointer}
-.hidden{display:none!important}
-
-/* LOGIN */
-.login-screen{
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  padding:20px;
-  background:
-    radial-gradient(circle at 20% 20%,#183c70,transparent 38%),
-    radial-gradient(circle at 85% 80%,#142b50,transparent 38%),
-    var(--bg);
-}
-.login-card{
-  width:100%;
-  max-width:410px;
-  padding:35px;
-  background:var(--panel);
-  border:1px solid var(--line);
-  border-radius:20px;
-  box-shadow:0 25px 80px #0008;
-}
-.brand{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  margin-bottom:30px;
-}
-.brand-icon{
-  width:45px;
-  height:45px;
-  display:grid;
-  place-items:center;
-  border-radius:13px;
-  background:linear-gradient(135deg,var(--blue),var(--cyan));
-  font-size:22px;
-  font-weight:bold;
-}
-.brand-name{font-size:19px;font-weight:700}
-.login-card h1{font-size:27px;margin:0 0 25px}
-.field{margin-bottom:18px}
-.field label{
-  display:block;
-  color:var(--muted);
-  font-size:13px;
-  margin-bottom:8px;
-}
-.field input{
-  width:100%;
-  padding:14px;
-  background:#0b1424;
-  color:white;
-  border:1px solid var(--line);
-  border-radius:10px;
-  outline:none;
-}
-.field input:focus{border-color:var(--blue)}
-.password-wrap{position:relative}
-.password-wrap input{padding-right:65px}
-.show-password{
-  position:absolute;
-  right:10px;
-  top:50%;
-  transform:translateY(-50%);
-  border:0;
-  background:none;
-  color:var(--cyan);
-  font-size:12px;
-}
-.primary-btn{
-  width:100%;
-  padding:14px;
-  border:0;
-  border-radius:10px;
-  background:linear-gradient(100deg,var(--blue),#2365d8);
-  color:white;
-  font-weight:700;
-}
-.login-error{
-  min-height:18px;
-  color:var(--red);
-  font-size:13px;
-  margin-top:12px;
-}
-
-/* DASHBOARD */
-.sidebar{
-  position:fixed;
-  left:0;
-  top:0;
-  bottom:0;
-  width:245px;
-  padding:25px 17px;
-  background:#0d1728;
-  border-right:1px solid var(--line);
-  z-index:5;
-}
-.sidebar .brand{margin:0 0 38px 5px}
-.nav-label{
-  color:#71829d;
-  font-size:10px;
-  letter-spacing:1.5px;
-  padding:0 12px;
-  margin-bottom:12px;
-}
-.nav-btn{
-  width:100%;
-  padding:13px 14px;
-  margin-bottom:7px;
-  border:1px solid transparent;
-  border-radius:10px;
-  background:transparent;
-  color:#aab8ce;
-  text-align:left;
-  display:flex;
-  gap:12px;
-  align-items:center;
-}
-.nav-btn:hover,.nav-btn.active{
-  background:#172b48;
-  color:white;
-  border-color:#29476d;
-}
-.nav-icon{width:20px;text-align:center}
-.sidebar-bottom{
-  position:absolute;
-  bottom:22px;
-  left:17px;
-  right:17px;
-}
-.logout-btn{
-  width:100%;
-  padding:12px;
-  border:1px solid var(--line);
-  background:#172236;
-  color:#dce7f8;
-  border-radius:10px;
-}
-.main{
-  margin-left:245px;
-  padding:30px;
-  max-width:1600px;
-}
-.topbar{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:15px;
-  margin-bottom:28px;
-}
-.topbar h1{font-size:25px;margin:0}
-.top-actions{display:flex;gap:10px}
-.icon-btn{
-  border:1px solid var(--line);
-  background:var(--panel);
-  color:white;
-  border-radius:10px;
-  padding:10px 13px;
-}
-.content-grid{
-  display:grid;
-  grid-template-columns:repeat(12,minmax(0,1fr));
-  gap:18px;
-}
-.card{
-  background:var(--panel);
-  border:1px solid var(--line);
-  border-radius:15px;
-  padding:20px;
-  min-width:0;
-}
-.card h2{font-size:16px;margin:0 0 19px}
-.span-12{grid-column:span 12}
-.span-8{grid-column:span 8}
-.span-7{grid-column:span 7}
-.span-6{grid-column:span 6}
-.span-5{grid-column:span 5}
-.span-4{grid-column:span 4}
-.profile-row{display:flex;align-items:center;gap:17px}
-.avatar{
-  width:58px;
-  height:58px;
-  display:grid;
-  place-items:center;
-  border-radius:16px;
-  background:linear-gradient(135deg,#2868c8,#36b8d2);
-  font-size:22px;
-  font-weight:700;
-}
-.profile-name{font-size:19px;font-weight:700}
-.profile-number{color:var(--muted);font-size:13px;margin-top:6px}
-.info-list{display:grid}
-.info-item{
-  display:flex;
-  justify-content:space-between;
-  gap:15px;
-  padding:13px 0;
-  border-bottom:1px solid var(--line);
-  font-size:13px;
-}
-.info-item:last-child{border-bottom:0}
-.info-item span:first-child{color:var(--muted)}
-.info-item span:last-child{
-  text-align:right;
-  overflow-wrap:anywhere;
-}
-.contact-search{
-  width:100%;
-  padding:12px 14px;
-  background:#0b1424;
-  color:white;
-  border:1px solid var(--line);
-  border-radius:9px;
-  margin-bottom:15px;
-  outline:none;
-}
-.contact-list{display:grid;gap:9px}
-.contact-item{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  padding:13px;
-  border-radius:10px;
-  border:1px solid var(--line);
-  background:#0e192b;
-  cursor:pointer;
-}
-.contact-item:hover,.contact-item.selected{
-  border-color:var(--blue);
-  background:#172b48;
-}
-.contact-avatar{
-  width:38px;
-  height:38px;
-  display:grid;
-  place-items:center;
-  background:#263f65;
-  border-radius:11px;
-  font-weight:700;
-}
-.contact-details{flex:1;min-width:0}
-.contact-details strong{display:block;font-size:13px}
-.contact-details small{
-  display:block;
-  color:var(--muted);
-  margin-top:5px;
-}
-.contact-arrow{color:var(--muted)}
-.activity-list{display:grid}
-.activity-item{
-  display:flex;
-  gap:13px;
-  padding:13px 0;
-  border-bottom:1px solid var(--line);
-}
-.activity-item:last-child{border:0}
-.activity-icon{
-  width:35px;
-  height:35px;
-  display:grid;
-  place-items:center;
-  background:#1c3150;
-  border-radius:10px;
-}
-.activity-item strong{font-size:13px}
-.activity-item small{
-  display:block;
-  color:var(--muted);
-  margin-top:5px;
-}
-.location-address{
-  padding:17px;
-  background:#0c1728;
-  border:1px solid var(--line);
-  border-radius:11px;
-  font-size:14px;
-  line-height:1.6;
-}
-.location-status{
-  margin-top:15px;
-  color:var(--muted);
-  font-size:13px;
-}
-.copy-btn{
-  padding:8px 11px;
-  color:var(--cyan);
-  background:#142b43;
-  border:1px solid #285273;
-  border-radius:8px;
-  font-size:12px;
-}
-.empty-state{
-  padding:25px;
-  text-align:center;
-  color:var(--muted);
-  font-size:13px;
-}
-.mobile-nav{display:none}
-
-/* ACCESS MESSAGE */
-.access-overlay{
-  position:fixed;
-  inset:0;
-  z-index:1000;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  padding:22px;
-  background:rgba(3,8,17,.88);
-  backdrop-filter:blur(8px);
-}
-.access-modal{
-  width:100%;
-  max-width:420px;
-  padding:30px;
-  text-align:center;
-  background:#111b2d;
-  border:1px solid #713b4a;
-  border-radius:17px;
-  box-shadow:0 25px 90px #0009;
-}
-.access-symbol{
-  width:55px;
-  height:55px;
-  margin:0 auto 18px;
-  display:grid;
-  place-items:center;
-  border-radius:50%;
-  background:#49232e;
-  color:#ff8592;
-  font-size:27px;
-}
-.access-modal h2{
-  font-size:19px;
-  line-height:1.45;
-  color:#ff8a96;
-  margin:0 0 22px;
-}
-.access-close{
-  width:100%;
-  padding:12px;
-  border:0;
-  border-radius:9px;
-  background:#263a59;
-  color:white;
-  font-weight:700;
-}
-
-/* MOBILE */
-@media(max-width:900px){
-  .sidebar{display:none}
-  .main{margin-left:0;padding:22px 16px 90px}
-  .mobile-nav{
-    display:flex;
-    position:fixed;
-    bottom:0;
-    left:0;
-    right:0;
-    z-index:10;
-    background:#0d1728;
-    border-top:1px solid var(--line);
-    justify-content:space-around;
-    padding:9px 4px;
-  }
-  .mobile-nav button{
-    border:0;
-    background:none;
-    color:#91a1bb;
-    display:flex;
-    flex-direction:column;
-    gap:4px;
-    align-items:center;
-    font-size:10px;
-    padding:5px;
-  }
-  .mobile-nav button.active{color:var(--cyan)}
-  .span-8,.span-7,.span-6,.span-5,.span-4{
-    grid-column:span 12;
-  }
-}
-@media(max-width:480px){
-  .login-card{padding:25px}
-  .topbar h1{font-size:21px}
-  .card{padding:16px}
-  .profile-name{font-size:16px}
-}
+body{margin:0;background:#fff;color:#111;font-family:Arial,sans-serif}
+.phone{max-width:540px;margin:auto;min-height:100vh}
+.topbar{height:54px;display:flex;align-items:center;padding:0 16px;gap:28px}
+.back{font-size:34px}
+.username{font-size:27px;font-weight:bold;flex:1}
+.dots{font-size:25px}
+.profile{padding:9px 16px 0}
+.profile-head{display:flex;align-items:center;gap:20px}
+.avatar-ring{width:126px;height:126px;border-radius:50%;padding:4px;background:conic-gradient(#833ab4,#c13584,#fd1d1d,#fcb045,#833ab4)}
+.avatar{width:100%;height:100%;border-radius:50%;border:3px solid white;object-fit:cover}
+.stats{display:flex;justify-content:space-around;flex:1;text-align:center;gap:10px}
+.stat strong{display:block;font-size:21px;font-weight:500}
+.stat span{font-size:16px}
+.display-name{font-size:18px;margin:10px 0 12px}
+.bio{font-size:17px;line-height:1.4}
+.bio a{color:#344f9e;text-decoration:none;font-weight:bold}
+.category{display:inline-block;border:1px solid #ddd;border-radius:20px;padding:5px 11px;margin-top:8px;font-size:14px}
+.actions{display:flex;gap:9px;margin:16px 0 12px}
+.actions button{border:0;border-radius:9px;height:44px;font-size:16px;font-weight:600;flex:1;background:#efeff4;cursor:pointer}
+.actions .follow{background:#4f5df5;color:white}
+.actions .add{flex:0 0 46px;font-size:22px}
+.tabs{height:54px;display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid #dbdbdb}
+.tab{display:flex;align-items:center;justify-content:center;color:#777;font-size:29px}
+.tab.active{color:#111;border-bottom:2px solid #111}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.post{position:relative;aspect-ratio:3/4;overflow:hidden;background:#eee}
+.post img{width:100%;height:100%;object-fit:cover;display:block}
+.mark{position:absolute;right:8px;top:8px;color:white;font-size:20px}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#222;color:white;padding:10px 16px;border-radius:22px;opacity:0;transition:.2s}
+.toast.show{opacity:1}
+@media(min-width:600px){body{background:#fafafa}.phone{border-left:1px solid #eee;border-right:1px solid #eee}}
 </style>
 </head>
-
 <body>
+<main class="phone">
+<header class="topbar">
+<span class="back">‹</span>
+<span class="username">chzter</span>
+<span class="dots">•••</span>
+</header>
 
-<section class="login-screen" id="loginScreen">
-  <div class="login-card">
-    <div class="brand">
-      <div class="brand-icon">C</div>
-      <div class="brand-name">Contact Dashboard</div>
-    </div>
+<section class="profile">
+<div class="profile-head">
+<div class="avatar-ring">
+<img class="avatar" src="images/profile.jpg" alt="Profile">
+</div>
+<div class="stats">
+<div class="stat"><strong>102</strong><span>posts</span></div>
+<div class="stat"><strong>81.3K</strong><span>followers</span></div>
+<div class="stat"><strong>1,361</strong><span>following</span></div>
+</div>
+</div>
 
-    <h1>Sign in</h1>
+<div class="display-name">Chzter</div>
+<div class="bio">
+booking/contacto: chztercontacto@gmail.com<br>
+BOLETOS TOUR 👇🏻👇🏻👇🏻<br>
+<a href="https://tr.ee/PsIXuggmRB" target="_blank">↗ tr.ee/PsIXuggmRB</a>
+</div>
 
-    <form id="loginForm">
-      <div class="field">
-        <label for="email">Email address</label>
-        <input id="email" type="email"
-          autocomplete="username" required>
-      </div>
+<div class="category">◉ cheto</div>
 
-      <div class="field">
-        <label for="password">Password</label>
-        <div class="password-wrap">
-          <input id="password" type="password"
-            autocomplete="current-password" required>
-          <button class="show-password" type="button"
-            id="togglePassword">Show</button>
-        </div>
-      </div>
-
-      <button class="primary-btn" type="submit">Sign in</button>
-      <div class="login-error" id="loginError"></div>
-    </form>
-  </div>
+<div class="actions">
+<button class="follow" onclick="toggleFollow(this)">Follow</button>
+<button onclick="notify('Message button selected')">Message</button>
+<button onclick="notify('Contact button selected')">Contact</button>
+<button class="add" onclick="notify('Add person selected')">♙+</button>
+</div>
 </section>
 
-<div class="hidden" id="dashboard">
+<nav class="tabs">
+<div class="tab active">▦</div>
+<div class="tab">▣</div>
+<div class="tab">⇄</div>
+<div class="tab">♙</div>
+</nav>
 
-  <aside class="sidebar">
-    <div class="brand">
-      <div class="brand-icon">C</div>
-      <div class="brand-name">Contact Dashboard</div>
-    </div>
+<section class="grid">
+<div class="post"><img src="images/post1.jpg" alt="Post 1"><span class="mark">▢</span></div>
+<div class="post"><img src="images/post2.jpg" alt="Post 2"><span class="mark">▢</span></div>
+<div class="post"><img src="images/post3.jpg" alt="Post 3"><span class="mark">▶</span></div>
+<div class="post"><img src="images/post4.jpg" alt="Post 4"><span class="mark">▶</span></div>
+<div class="post"><img src="images/post5.jpg" alt="Post 5"><span class="mark">▶</span></div>
+<div class="post"><img src="images/post6.jpg" alt="Post 6"><span class="mark">▶</span></div>
+<div class="post"><img src="images/post7.jpg" alt="Post 7"><span class="mark">▢</span></div>
+<div class="post"><img src="images/post8.jpg" alt="Post 8"><span class="mark">▢</span></div>
+<div class="post"><img src="images/post9.jpg" alt="Post 9"><span class="mark">▢</span></div>
+</section>
+</main>
 
-    <div class="nav-label">MENU</div>
-
-    <button class="nav-btn active" data-action="Overview">
-      <span class="nav-icon">▦</span> Overview
-    </button>
-
-    <button class="nav-btn" data-action="Contacts">
-      <span class="nav-icon">♙</span> Contacts
-    </button>
-
-    <button class="nav-btn" data-action="Activity">
-      <span class="nav-icon">◷</span> Activity
-    </button>
-
-    <button class="nav-btn" data-action="Location">
-      <span class="nav-icon">⌖</span> Location
-    </button>
-
-    <div class="sidebar-bottom">
-      <button class="logout-btn" onclick="logout()">
-        ↪ &nbsp; Sign out
-      </button>
-    </div>
-  </aside>
-
-  <main class="main">
-    <header class="topbar">
-      <h1 id="pageTitle">Overview</h1>
-      <div class="top-actions">
-        <button class="icon-btn" data-action="Contacts">Contacts</button>
-        <button class="icon-btn" onclick="logout()">Sign out</button>
-      </div>
-    </header>
-
-    <section id="page-overview" class="page">
-      <div class="content-grid">
-
-        <div class="card span-7">
-          <h2>Primary Contact</h2>
-          <div class="profile-row" data-action="Primary Contact">
-            <div class="avatar">C</div>
-            <div>
-              <div class="profile-name">Casey Kevin Behan Nicole</div>
-              <div class="profile-number">+1 (859) 640-1796</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card span-5">
-          <h2>Contact Status</h2>
-          <div class="info-list">
-            <div class="info-item">
-              <span>Profile</span><span>Active</span>
-            </div>
-            <div class="info-item">
-              <span>Carrier</span>
-              <span>Celico Partnership DBA Verizon</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="card span-6">
-          <h2>Contact Information</h2>
-          <div class="info-list">
-            <div class="info-item">
-              <span>Name</span>
-              <span>Casey Kevin Behan Nicole</span>
-            </div>
-            <div class="info-item">
-              <span>Phone</span>
-              <span>+1 (859) 640-1796</span>
-            </div>
-            <div class="info-item">
-              <span>Carrier</span>
-              <span>Celico Partnership DBA Verizon</span>
-            </div>
-            <div class="info-item">
-              <span>Location</span>
-              <span>Covington, Kentucky, United States</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="card span-6" data-action="Location Details">
-          <h2>Location Details</h2>
-          <div class="location-address">
-            United States, Kentucky, Covington
-          </div>
-          <div class="location-status">
-            ● Live location not connected
-          </div>
-        </div>
-
-        <div class="card span-12" data-action="Recent Activity">
-          <h2>Recent Activity</h2>
-          <div class="activity-list" id="overviewActivity"></div>
-        </div>
-
-      </div>
-    </section>
-
-    <section id="page-contacts" class="page hidden">
-      <div class="content-grid">
-        <div class="card span-5">
-          <h2>Contacts</h2>
-          <input class="contact-search" id="contactSearch"
-            placeholder="Search contacts">
-          <div class="contact-list" id="contactList"></div>
-        </div>
-
-        <div class="card span-7">
-          <h2>Contact Details</h2>
-          <div id="selectedContact">
-            <div class="empty-state">Select a contact</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="page-activity" class="page hidden">
-      <div class="content-grid">
-        <div class="card span-12">
-          <h2>Activity</h2>
-          <div class="activity-list" id="fullActivity"></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="page-location" class="page hidden">
-      <div class="content-grid">
-        <div class="card span-7">
-          <h2>Location Details</h2>
-          <div class="info-list">
-            <div class="info-item">
-              <span>Contact</span>
-              <span>Casey Kevin Behan Nicole</span>
-            </div>
-            <div class="info-item">
-              <span>Phone</span>
-              <span>+1 (859) 640-1796</span>
-            </div>
-            <div class="info-item">
-              <span>Carrier</span>
-              <span>Celico Partnership DBA Verizon</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="card span-5">
-          <h2>Address</h2>
-          <div class="location-address">
-            United States, Kentucky, Covington
-          </div>
-          <div class="location-status">
-            ● Live location not connected
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <nav class="mobile-nav">
-    <button class="active" data-action="Overview">
-      <span>▦</span>Overview
-    </button>
-    <button data-action="Contacts">
-      <span>♙</span>Contacts
-    </button>
-    <button data-action="Activity">
-      <span>◷</span>Activity
-    </button>
-    <button data-action="Location">
-      <span>⌖</span>Location
-    </button>
-  </nav>
-
-</div>
-
-<div class="access-overlay hidden" id="accessOverlay"
-  role="alertdialog" aria-modal="true"
-  aria-labelledby="accessMessage">
-  <div class="access-modal">
-    <div class="access-symbol">!</div>
-    <h2 id="accessMessage">
-      Unable to Generate Complete Access
-    </h2>
-    <button class="access-close" id="closeAccess">Close</button>
-  </div>
-</div>
+<div id="toast" class="toast"></div>
 
 <script>
-const LOGIN_EMAIL = "gianny.andrade@gmail.com";
-const LOGIN_PASSWORD = "Remoteaccess";
-
-const contacts = [
-  {
-    name:"Casey Kevin Behan Nicole",
-    phone:"+1 (859) 640-1796",
-    carrier:"Celico Partnership DBA Verizon",
-    address:"United States, Kentucky, Covington"
-  },
-  {name:"Benjamin Merel",phone:"",carrier:"",address:""},
-  {name:"Abigail Merel Tamir",phone:"",carrier:"",address:""},
-  {name:"Abigail Merel-Tamir",phone:"",carrier:"",address:""},
-  {name:"Leah Scharf",phone:"",carrier:"",address:""},
-  {name:"Bryan Charles",phone:"",carrier:"",address:""}
-];
-
-const activity = [
-  {icon:"♙",title:"Contact profile opened",time:"Recent"},
-  {icon:"⌖",title:"Location details viewed",time:"Recent"},
-  {icon:"▤",title:"Contact information viewed",time:"Recent"}
-];
-
-let loggedIn = false;
-
-const loginScreen = document.getElementById("loginScreen");
-const dashboard = document.getElementById("dashboard");
-const accessOverlay = document.getElementById("accessOverlay");
-
-document.getElementById("loginForm").addEventListener("submit",function(e){
-  e.preventDefault();
-
-  const email=document.getElementById("email").value.trim();
-  const password=document.getElementById("password").value;
-
-  if(
-    email.toLowerCase() === LOGIN_EMAIL.toLowerCase() &&
-    password === LOGIN_PASSWORD
-  ){
-    loggedIn=true;
-    document.getElementById("loginError").textContent="";
-    loginScreen.classList.add("hidden");
-    dashboard.classList.remove("hidden");
-    renderActivity();
-    renderContacts();
-    showPage("Overview");
-  }else{
-    document.getElementById("loginError").textContent=
-      "Incorrect email or password.";
-  }
-});
-
-document.getElementById("togglePassword").addEventListener("click",function(){
-  const field=document.getElementById("password");
-  const visible=field.type==="text";
-  field.type=visible?"password":"text";
-  this.textContent=visible?"Show":"Hide";
-});
-
-function logout(){
-  loggedIn=false;
-  accessOverlay.classList.add("hidden");
-  dashboard.classList.add("hidden");
-  loginScreen.classList.remove("hidden");
-  document.getElementById("loginForm").reset();
-  document.getElementById("loginError").textContent="";
+function notify(message){
+const toast=document.getElementById('toast');
+toast.textContent=message;
+toast.classList.add('show');
+clearTimeout(window.toastTimer);
+window.toastTimer=setTimeout(()=>toast.classList.remove('show'),1800);
 }
 
-function showAccessMessage(){
-  if(loggedIn){
-    accessOverlay.classList.remove("hidden");
-  }
+function toggleFollow(button){
+const following=button.textContent==='Following';
+button.textContent=following?'Follow':'Following';
+button.style.background=following?'#4f5df5':'#efeff4';
+button.style.color=following?'white':'#111';
+notify(following?'You unfollowed chzter':'You are now following chzter');
 }
-
-document.getElementById("closeAccess").addEventListener("click",function(){
-  accessOverlay.classList.add("hidden");
-});
-
-function showPage(page){
-  showAccessMessage();
-
-  document.querySelectorAll(".page").forEach(el=>{
-    el.classList.add("hidden");
-  });
-
-  const target=document.getElementById("page-"+page.toLowerCase());
-  if(target)target.classList.remove("hidden");
-
-  document.querySelectorAll("[data-action]").forEach(btn=>{
-    btn.classList.toggle(
-      "active",
-      btn.dataset.action.toLowerCase()===page.toLowerCase()
-    );
-  });
-
-  document.getElementById("pageTitle").textContent=page;
-}
-
-document.querySelectorAll("[data-action]").forEach(element=>{
-  element.addEventListener("click",function(){
-    const action=this.dataset.action;
-    const pages=["Overview","Contacts","Activity","Location"];
-
-    if(pages.includes(action)){
-      showPage(action);
-    }else{
-      showAccessMessage();
-    }
-  });
-});
-
-function renderContacts(filter=""){
-  const list=document.getElementById("contactList");
-
-  const filtered=contacts.filter(contact=>
-    contact.name.toLowerCase().includes(filter.toLowerCase()) ||
-    contact.phone.includes(filter)
-  );
-
-  if(!filtered.length){
-    list.innerHTML='<div class="empty-state">No contacts found</div>';
-    return;
-  }
-
-  list.innerHTML=filtered.map(contact=>{
-    const index=contacts.indexOf(contact);
-    return `
-      <div class="contact-item" data-contact-index="${index}">
-        <div class="contact-avatar">${contact.name.charAt(0)}</div>
-        <div class="contact-details">
-          <strong>${contact.name}</strong>
-          <small>${contact.phone || "—"}</small>
-        </div>
-        <span class="contact-arrow">›</span>
-      </div>
-    `;
-  }).join("");
-
-  list.querySelectorAll("[data-contact-index]").forEach(item=>{
-    item.addEventListener("click",function(){
-      selectContact(Number(this.dataset.contactIndex));
-      showAccessMessage();
-    });
-  });
-}
-
-function selectContact(index){
-  const contact=contacts[index];
-
-  document.getElementById("selectedContact").innerHTML=`
-    <div class="profile-row" style="margin-bottom:22px">
-      <div class="avatar">${contact.name.charAt(0)}</div>
-      <div class="profile-name">${contact.name}</div>
-    </div>
-
-    <div class="info-list">
-      <div class="info-item">
-        <span>Name</span><span>${contact.name}</span>
-      </div>
-      <div class="info-item">
-        <span>Phone</span><span>${contact.phone || "—"}</span>
-      </div>
-      <div class="info-item">
-        <span>Carrier</span><span>${contact.carrier || "—"}</span>
-      </div>
-      <div class="info-item">
-        <span>Address</span><span>${contact.address || "—"}</span>
-      </div>
-    </div>
-
-    ${contact.phone ? `
-      <button class="copy-btn" style="margin-top:16px"
-        id="copyPhone">Copy phone number</button>
-    ` : ""}
-  `;
-
-  const copyButton=document.getElementById("copyPhone");
-
-  if(copyButton){
-    copyButton.addEventListener("click",function(e){
-      e.stopPropagation();
-      navigator.clipboard?.writeText(contact.phone);
-      showAccessMessage();
-    });
-  }
-}
-
-document.getElementById("contactSearch").addEventListener("input",function(){
-  renderContacts(this.value);
-  showAccessMessage();
-});
-
-function renderActivity(){
-  const html=activity.map(item=>`
-    <div class="activity-item">
-      <div class="activity-icon">${item.icon}</div>
-      <div>
-        <strong>${item.title}</strong>
-        <small>${item.time}</small>
-      </div>
-    </div>
-  `).join("");
-
-  document.getElementById("overviewActivity").innerHTML=html;
-  document.getElementById("fullActivity").innerHTML=html;
-}
-
-dashboard.addEventListener("click",function(event){
-  if(!loggedIn)return;
-
-  const interactive=event.target.closest(
-    "button,input,.contact-item,[data-action],.profile-row,.card"
-  );
-
-  if(!interactive)return;
-
-  if(
-    interactive.id==="closeAccess" ||
-    interactive.id==="togglePassword" ||
-    interactive.id==="email" ||
-    interactive.id==="password"
-  )return;
-
-  if(interactive.dataset.action)return;
-  if(interactive.dataset.contactIndex!==undefined)return;
-
-  if(interactive.classList.contains("nav-btn"))return;
-
-  showAccessMessage();
-});
 </script>
-
 </body>
 </html>
