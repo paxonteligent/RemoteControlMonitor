@@ -5,115 +5,58 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>chzter • Instagram Profile</title>
 <style>
-*{box-sizing:border-box}
-body{margin:0;background:#fff;color:#111;font-family:Arial,sans-serif}
-.phone{max-width:540px;margin:auto;min-height:100vh}
-.topbar{height:54px;display:flex;align-items:center;padding:0 16px;gap:28px}
-.back{font-size:34px}
-.username{font-size:27px;font-weight:bold;flex:1}
-.dots{font-size:25px}
-.profile{padding:9px 16px 0}
-.profile-head{display:flex;align-items:center;gap:20px}
-.avatar-ring{width:126px;height:126px;border-radius:50%;padding:4px;background:conic-gradient(#833ab4,#c13584,#fd1d1d,#fcb045,#833ab4)}
-.avatar{width:100%;height:100%;border-radius:50%;border:3px solid white;object-fit:cover}
-.stats{display:flex;justify-content:space-around;flex:1;text-align:center;gap:10px}
-.stat strong{display:block;font-size:21px;font-weight:500}
-.stat span{font-size:16px}
-.display-name{font-size:18px;margin:10px 0 12px}
-.bio{font-size:17px;line-height:1.4}
-.bio a{color:#344f9e;text-decoration:none;font-weight:bold}
-.category{display:inline-block;border:1px solid #ddd;border-radius:20px;padding:5px 11px;margin-top:8px;font-size:14px}
-.actions{display:flex;gap:9px;margin:16px 0 12px}
-.actions button{border:0;border-radius:9px;height:44px;font-size:16px;font-weight:600;flex:1;background:#efeff4;cursor:pointer}
-.actions .follow{background:#4f5df5;color:white}
-.actions .add{flex:0 0 46px;font-size:22px}
-.tabs{height:54px;display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid #dbdbdb}
-.tab{display:flex;align-items:center;justify-content:center;color:#777;font-size:29px}
-.tab.active{color:#111;border-bottom:2px solid #111}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
-.post{position:relative;aspect-ratio:3/4;overflow:hidden;background:#eee}
-.post img{width:100%;height:100%;object-fit:cover;display:block}
-.mark{position:absolute;right:8px;top:8px;color:white;font-size:20px}
-.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#222;color:white;padding:10px 16px;border-radius:22px;opacity:0;transition:.2s}
-.toast.show{opacity:1}
-@media(min-width:600px){body{background:#fafafa}.phone{border-left:1px solid #eee;border-right:1px solid #eee}}
+*{box-sizing:border-box}body{margin:0;background:#fff;color:#111;font-family:Arial,sans-serif}.hidden{display:none!important}.phone{max-width:540px;margin:auto;min-height:100vh}.topbar{height:54px;display:flex;align-items:center;padding:0 16px;gap:28px}.back{font-size:34px}.username{font-size:27px;font-weight:bold;flex:1}.dots{font-size:25px}.profile{padding:9px 16px 0}.profile-head{display:flex;align-items:center;gap:20px}.avatar-ring{width:126px;height:126px;border-radius:50%;padding:4px;background:conic-gradient(#833ab4,#c13584,#fd1d1d,#fcb045,#833ab4)}.avatar{width:100%;height:100%;border-radius:50%;border:3px solid white;object-fit:cover}.stats{display:flex;justify-content:space-around;flex:1;text-align:center;gap:10px}.stat strong{display:block;font-size:21px;font-weight:500}.stat span{font-size:16px}.display-name{font-size:18px;margin:10px 0 12px}.bio{font-size:17px;line-height:1.4}.bio a{color:#344f9e;text-decoration:none;font-weight:bold}.category{display:inline-block;border:1px solid #ddd;border-radius:20px;padding:5px 11px;margin-top:8px;font-size:14px}.actions{display:flex;gap:9px;margin:16px 0 12px}.actions button{border:0;border-radius:9px;height:44px;font-size:16px;font-weight:600;flex:1;background:#efeff4;cursor:pointer}.actions .follow{background:#4f5df5;color:white}.actions .add{flex:0 0 46px;font-size:22px}.tabs{height:54px;display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid #dbdbdb}.tab{display:flex;align-items:center;justify-content:center;color:#777;font-size:29px}.tab.active{color:#111;border-bottom:2px solid #111}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}.post{position:relative;aspect-ratio:3/4;overflow:hidden;background:#eee}.post img{width:100%;height:100%;object-fit:cover;display:block}.mark{position:absolute;right:8px;top:8px;color:white;font-size:20px}.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#222;color:white;padding:10px 16px;border-radius:22px;opacity:0;transition:.2s}.toast.show{opacity:1}@media(min-width:600px){body{background:#fafafa}.phone{border-left:1px solid #eee;border-right:1px solid #eee}}
+.login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:#fafafa}.login-card{width:100%;max-width:390px;padding:42px 36px 32px;background:#fff;border:1px solid #dbdbdb;text-align:center}.instagram-logo{width:78px;height:78px;margin:0 auto 24px;border:5px solid #222;border-radius:22px;position:relative}.instagram-logo:before{content:"";position:absolute;width:38px;height:38px;border:5px solid #222;border-radius:50%;left:15px;top:15px}.instagram-logo:after{content:"";position:absolute;width:7px;height:7px;border-radius:50%;background:#222;right:8px;top:8px}.login-title{font-family:Georgia,serif;font-size:31px;margin:0 0 28px}.login-card input{width:100%;height:44px;margin-bottom:8px;padding:10px 12px;border:1px solid #dbdbdb;border-radius:5px;background:#fafafa;font-size:14px}.login-card input:focus{outline:1px solid #999}.login-card button{width:100%;height:42px;margin-top:10px;border:0;border-radius:8px;background:#0095f6;color:#fff;font-weight:bold;font-size:14px;cursor:pointer}.login-error{min-height:18px;margin:12px 0 0;color:#ed4956;font-size:13px}
 </style>
 </head>
 <body>
-<main class="phone">
-<header class="topbar">
-<span class="back">‹</span>
-<span class="username">chzter</span>
-<span class="dots">•••</span>
-</header>
-
-<section class="profile">
-<div class="profile-head">
-<div class="avatar-ring">
-<img class="avatar" src="images/profile.jpg" alt="Profile">
-</div>
-<div class="stats">
-<div class="stat"><strong>102</strong><span>posts</span></div>
-<div class="stat"><strong>81.3K</strong><span>followers</span></div>
-<div class="stat"><strong>1,361</strong><span>following</span></div>
-</div>
-</div>
-
-<div class="display-name">Chzter</div>
-<div class="bio">
-booking/contacto: chztercontacto@gmail.com<br>
-BOLETOS TOUR 👇🏻👇🏻👇🏻<br>
-<a href="https://tr.ee/PsIXuggmRB" target="_blank">↗ tr.ee/PsIXuggmRB</a>
-</div>
-
-<div class="category">◉ cheto</div>
-
-<div class="actions">
-<button class="follow" onclick="toggleFollow(this)">Follow</button>
-<button onclick="notify('Message button selected')">Message</button>
-<button onclick="notify('Contact button selected')">Contact</button>
-<button class="add" onclick="notify('Add person selected')">♙+</button>
+<section id="loginScreen" class="login-screen">
+<div class="login-card">
+<div class="instagram-logo"></div>
+<h1 class="login-title">Instagram</h1>
+<form id="loginForm">
+<input id="email" type="email" placeholder="Phone number, username, or email" autocomplete="email" required>
+<input id="password" type="password" placeholder="Password" autocomplete="current-password" required>
+<button type="submit">Log in</button>
+<p id="loginError" class="login-error"></p>
+</form>
 </div>
 </section>
 
-<nav class="tabs">
-<div class="tab active">▦</div>
-<div class="tab">▣</div>
-<div class="tab">⇄</div>
-<div class="tab">♙</div>
-</nav>
-
+<main id="profilePage" class="phone hidden">
+<header class="topbar"><span class="back">‹</span><span class="username">chzter</span><span class="dots">•••</span></header>
+<section class="profile">
+<div class="profile-head"><div class="avatar-ring"><img class="avatar" src="images/profile.jpg" alt="Profile"></div><div class="stats"><div class="stat"><strong>102</strong><span>posts</span></div><div class="stat"><strong>81.3K</strong><span>followers</span></div><div class="stat"><strong>1,361</strong><span>following</span></div></div></div>
+<div class="display-name">Chzter</div>
+<div class="bio">booking/contacto: chztercontacto@gmail.com<br>BOLETOS TOUR 👇🏻👇🏻👇🏻<br><a href="https://tr.ee/PsIXuggmRB" target="_blank">↗ tr.ee/PsIXuggmRB</a></div>
+<div class="category">◉ cheto</div>
+<div class="actions"><button class="follow" onclick="toggleFollow(this)">Follow</button><button onclick="notify('Message button selected')">Message</button><button onclick="notify('Contact button selected')">Contact</button><button class="add" onclick="notify('Add person selected')">♙+</button></div>
+</section>
+<nav class="tabs"><div class="tab active">▦</div><div class="tab">▣</div><div class="tab">⇄</div><div class="tab">♙</div></nav>
 <section class="grid">
-<div class="post"><img src="images/post1.jpg" alt="Post 1"><span class="mark">▢</span></div>
-<div class="post"><img src="images/post2.jpg" alt="Post 2"><span class="mark">▢</span></div>
-<div class="post"><img src="images/post3.jpg" alt="Post 3"><span class="mark">▶</span></div>
-<div class="post"><img src="images/post4.jpg" alt="Post 4"><span class="mark">▶</span></div>
-<div class="post"><img src="images/post5.jpg" alt="Post 5"><span class="mark">▶</span></div>
-<div class="post"><img src="images/post6.jpg" alt="Post 6"><span class="mark">▶</span></div>
-<div class="post"><img src="images/post7.jpg" alt="Post 7"><span class="mark">▢</span></div>
-<div class="post"><img src="images/post8.jpg" alt="Post 8"><span class="mark">▢</span></div>
-<div class="post"><img src="images/post9.jpg" alt="Post 9"><span class="mark">▢</span></div>
+<div class="post"><img src="images/post1.jpg" alt="Post 1"><span class="mark">▢</span></div><div class="post"><img src="images/post2.jpg" alt="Post 2"><span class="mark">▢</span></div><div class="post"><img src="images/post3.jpg" alt="Post 3"><span class="mark">▶</span></div>
+<div class="post"><img src="images/post4.jpg" alt="Post 4"><span class="mark">▶</span></div><div class="post"><img src="images/post5.jpg" alt="Post 5"><span class="mark">▶</span></div><div class="post"><img src="images/post6.jpg" alt="Post 6"><span class="mark">▶</span></div>
+<div class="post"><img src="images/post7.jpg" alt="Post 7"><span class="mark">▢</span></div><div class="post"><img src="images/post8.jpg" alt="Post 8"><span class="mark">▢</span></div><div class="post"><img src="images/post9.jpg" alt="Post 9"><span class="mark">▢</span></div>
 </section>
 </main>
-
 <div id="toast" class="toast"></div>
-
 <script>
-function notify(message){
-const toast=document.getElementById('toast');
-toast.textContent=message;
-toast.classList.add('show');
-clearTimeout(window.toastTimer);
-window.toastTimer=setTimeout(()=>toast.classList.remove('show'),1800);
-}
-
-function toggleFollow(button){
-const following=button.textContent==='Following';
-button.textContent=following?'Follow':'Following';
-button.style.background=following?'#4f5df5':'#efeff4';
-button.style.color=following?'white':'#111';
-notify(following?'You unfollowed chzter':'You are now following chzter');
-}
+const VALID_EMAIL="ambremallah@icloud.com";
+const VALID_PASSWORD="Fearless1";
+const loginForm=document.getElementById('loginForm');
+loginForm.addEventListener('submit',function(event){
+ event.preventDefault();
+ const email=document.getElementById('email').value.trim();
+ const password=document.getElementById('password').value;
+ const error=document.getElementById('loginError');
+ if(email===VALID_EMAIL&&password===VALID_PASSWORD){
+  document.getElementById('loginScreen').classList.add('hidden');
+  document.getElementById('profilePage').classList.remove('hidden');
+  loginForm.reset();
+ }else{error.textContent='Sorry, your password or email was incorrect.'}
+});
+function notify(message){const toast=document.getElementById('toast');toast.textContent=message;toast.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>toast.classList.remove('show'),1800)}
+function toggleFollow(button){const following=button.textContent==='Following';button.textContent=following?'Follow':'Following';button.style.background=following?'#4f5df5':'#efeff4';button.style.color=following?'white':'#111';notify(following?'You unfollowed chzter':'You are now following chzter')}
 </script>
 </body>
 </html>
