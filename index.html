@@ -3,60 +3,729 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>chzter • Instagram Profile</title>
+<title>Instagram UI Prototype</title>
+
 <style>
-*{box-sizing:border-box}body{margin:0;background:#fff;color:#111;font-family:Arial,sans-serif}.hidden{display:none!important}.phone{max-width:540px;margin:auto;min-height:100vh}.topbar{height:54px;display:flex;align-items:center;padding:0 16px;gap:28px}.back{font-size:34px}.username{font-size:27px;font-weight:bold;flex:1}.dots{font-size:25px}.profile{padding:9px 16px 0}.profile-head{display:flex;align-items:center;gap:20px}.avatar-ring{width:126px;height:126px;border-radius:50%;padding:4px;background:conic-gradient(#833ab4,#c13584,#fd1d1d,#fcb045,#833ab4)}.avatar{width:100%;height:100%;border-radius:50%;border:3px solid white;object-fit:cover}.stats{display:flex;justify-content:space-around;flex:1;text-align:center;gap:10px}.stat strong{display:block;font-size:21px;font-weight:500}.stat span{font-size:16px}.display-name{font-size:18px;margin:10px 0 12px}.bio{font-size:17px;line-height:1.4}.bio a{color:#344f9e;text-decoration:none;font-weight:bold}.category{display:inline-block;border:1px solid #ddd;border-radius:20px;padding:5px 11px;margin-top:8px;font-size:14px}.actions{display:flex;gap:9px;margin:16px 0 12px}.actions button{border:0;border-radius:9px;height:44px;font-size:16px;font-weight:600;flex:1;background:#efeff4;cursor:pointer}.actions .follow{background:#4f5df5;color:white}.actions .add{flex:0 0 46px;font-size:22px}.tabs{height:54px;display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid #dbdbdb}.tab{display:flex;align-items:center;justify-content:center;color:#777;font-size:29px}.tab.active{color:#111;border-bottom:2px solid #111}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}.post{position:relative;aspect-ratio:3/4;overflow:hidden;background:#eee}.post img{width:100%;height:100%;object-fit:cover;display:block}.mark{position:absolute;right:8px;top:8px;color:white;font-size:20px}.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#222;color:white;padding:10px 16px;border-radius:22px;opacity:0;transition:.2s}.toast.show{opacity:1}@media(min-width:600px){body{background:#fafafa}.phone{border-left:1px solid #eee;border-right:1px solid #eee}}
-.login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:#fafafa}.login-card{width:100%;max-width:390px;padding:42px 36px 32px;background:#fff;border:1px solid #dbdbdb;text-align:center}.instagram-logo{width:78px;height:78px;margin:0 auto 24px;border:5px solid #222;border-radius:22px;position:relative}.instagram-logo:before{content:"";position:absolute;width:38px;height:38px;border:5px solid #222;border-radius:50%;left:15px;top:15px}.instagram-logo:after{content:"";position:absolute;width:7px;height:7px;border-radius:50%;background:#222;right:8px;top:8px}.login-title{font-family:Georgia,serif;font-size:31px;margin:0 0 28px}.login-card input{width:100%;height:44px;margin-bottom:8px;padding:10px 12px;border:1px solid #dbdbdb;border-radius:5px;background:#fafafa;font-size:14px}.login-card input:focus{outline:1px solid #999}.login-card button{width:100%;height:42px;margin-top:10px;border:0;border-radius:8px;background:#0095f6;color:#fff;font-weight:bold;font-size:14px;cursor:pointer}.login-error{min-height:18px;margin:12px 0 0;color:#ed4956;font-size:13px}
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: #111;
+    background: #fafafa;
+}
+
+/* ==================== LOGIN VIEW STYLES ==================== */
+#loginView {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    background: #fafafa;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 520px;
+    min-height: 650px;
+    background: white;
+    border: 1px solid #ddd;
+    padding: 55px 35px;
+    text-align: center;
+}
+
+.logo {
+    width: 100px;
+    height: 100px;
+    border: 9px solid #222;
+    border-radius: 28px;
+    margin: 15px auto 45px;
+    position: relative;
+}
+
+.logo::before {
+    content: "";
+    position: absolute;
+    width: 45px;
+    height: 45px;
+    border: 8px solid #222;
+    border-radius: 50%;
+    top: 17px;
+    left: 17px;
+}
+
+.logo::after {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #222;
+    border-radius: 50%;
+    right: 12px;
+    top: 10px;
+}
+
+.login-container h1 {
+    font-family: Georgia, serif;
+    font-size: 42px;
+    margin-bottom: 55px;
+    color: #111;
+}
+
+.login-container input {
+    width: 100%;
+    height: 65px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 9px;
+    font-size: 17px;
+    margin-bottom: 16px;
+    outline: none;
+    background: #fafafa;
+}
+
+.login-container input:focus {
+    border-color: #999;
+}
+
+.password-box {
+    position: relative;
+}
+
+.password-box input {
+    padding-right: 55px;
+}
+
+.toggle {
+    position: absolute;
+    right: 17px;
+    top: 20px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.login-container button {
+    width: 100%;
+    height: 65px;
+    border: none;
+    border-radius: 10px;
+    background: #0095f6;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+.login-container button:hover {
+    background: #087ed0;
+}
+
+#error {
+    color: #d93025;
+    font-size: 14px;
+    margin-top: 18px;
+}
+
+.prototype {
+    font-size: 11px;
+    color: #888;
+    margin-top: 30px;
+}
+
+@media(max-width: 480px) {
+    .login-container {
+        border: none;
+        padding: 45px 20px;
+    }
+}
+
+/* ==================== OVERVIEW APP STYLES ==================== */
+#appView {
+    display: none;
+    background: white;
+    min-height: 100vh;
+}
+
+.app {
+    max-width: 540px;
+    margin: auto;
+    min-height: 100vh;
+    background: white;
+}
+
+header {
+    height: 55px;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    gap: 20px;
+}
+
+header h2 {
+    font-size: 25px;
+    flex: 1;
+}
+
+.back {
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.menu-btn {
+    font-size: 22px;
+    cursor: pointer;
+    padding: 4px 8px;
+}
+
+.profile {
+    padding: 15px;
+}
+
+.profile-top {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.ring {
+    width: 120px;
+    height: 120px;
+    padding: 4px;
+    border-radius: 50%;
+    background: conic-gradient(#833ab4, #c13584, #fd1d1d, #fcb045, #833ab4);
+}
+
+.ring img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid white;
+}
+
+.stats {
+    display: flex;
+    flex: 1;
+    justify-content: space-around;
+    text-align: center;
+}
+
+.stats strong {
+    display: block;
+    font-size: 21px;
+    font-weight: 500;
+}
+
+.stats span {
+    font-size: 15px;
+}
+
+.name {
+    font-size: 18px;
+    margin-top: 12px;
+}
+
+.bio {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-top: 8px;
+}
+
+.bio a {
+    color: #344f9e;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.category {
+    display: inline-block;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    padding: 5px 12px;
+    margin-top: 8px;
+}
+
+.buttons {
+    display: flex;
+    gap: 9px;
+    margin-top: 18px;
+}
+
+.buttons button {
+    height: 44px;
+    flex: 1;
+    border: 0;
+    border-radius: 9px;
+    background: #efeff4;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.buttons .add {
+    flex: 0 0 48px;
+}
+
+.tabs {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    height: 55px;
+    border-bottom: 1px solid #ddd;
+}
+
+.tab {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    color: #777;
+}
+
+.tab.active {
+    border-bottom: 2px solid black;
+    color: black;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+}
+
+.post {
+    aspect-ratio: 3/4;
+    overflow: hidden;
+}
+
+.post img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+#messages, #conversation {
+    display: none;
+}
+
+.inbox-title {
+    font-size: 22px;
+    font-weight: bold;
+    padding: 18px;
+}
+
+.search {
+    margin: 0 15px 15px;
+    padding: 12px;
+    background: #f2f2f2;
+    border-radius: 10px;
+    color: #777;
+}
+
+.message {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 13px 15px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+}
+
+.message img {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.message-info {
+    flex: 1;
+}
+
+.message-info strong {
+    display: block;
+    margin-bottom: 6px;
+}
+
+.message-info p {
+    margin: 0;
+    color: #777;
+    font-size: 14px;
+}
+
+.time {
+    font-size: 12px;
+    color: #999;
+}
+
+/* Blue conversation */
+#conversation {
+    background: #eaf3ff;
+    min-height: calc(100vh - 55px);
+}
+
+.chat-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: #fff;
+    border-bottom: 1px solid #dce8f5;
+}
+
+.chat-profile img {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.chat-body {
+    padding: 18px;
+    min-height: 55vh;
+}
+
+.day {
+    text-align: center;
+    color: #8296ad;
+    font-size: 11px;
+    margin-bottom: 20px;
+}
+
+.bubble {
+    padding: 12px 15px;
+    border-radius: 18px;
+    margin: 10px 0;
+    max-width: 80%;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.received {
+    background: white;
+    border-bottom-left-radius: 5px;
+}
+
+.sent {
+    background: #1877f2;
+    color: white;
+    margin-left: auto;
+    border-bottom-right-radius: 5px;
+}
+
+/* Warning overlay */
+.warning-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(255, 255, 255, .88);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 10;
+}
+
+.warning-card {
+    width: 100%;
+    max-width: 460px;
+    text-align: center;
+    padding: 25px 12px;
+    background: rgba(255, 255, 255, .96);
+}
+
+.warning-icon {
+    font-size: 145px;
+    line-height: 1.2;
+}
+
+.warning-title {
+    font-size: 25px;
+    font-weight: bold;
+    color: #c69d8b;
+    line-height: 1.45;
+    margin: 12px 0 35px;
+}
+
+.code-boxes {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+.code-box {
+    width: 45px;
+    height: 52px;
+    border: 1.5px solid #ccc;
+    border-radius: 13px;
+    background: #fff;
+}
+
+.code-box:first-child {
+    border-color: #7895aa;
+}
 </style>
 </head>
-<body>
-<section id="loginScreen" class="login-screen">
-<div class="login-card">
-<div class="instagram-logo"></div>
-<h1 class="login-title">Instagram</h1>
-<form id="loginForm">
-<input id="email" type="email" placeholder="Phone number, username, or email" autocomplete="email" required>
-<input id="password" type="password" placeholder="Password" autocomplete="current-password" required>
-<button type="submit">Log in</button>
-<p id="loginError" class="login-error"></p>
-</form>
-</div>
-</section>
 
-<main id="profilePage" class="phone hidden">
-<header class="topbar"><span class="back">‹</span><span class="username">chzter</span><span class="dots">•••</span></header>
-<section class="profile">
-<div class="profile-head"><div class="avatar-ring"><img class="avatar" src="images/profile.jpg" alt="Profile"></div><div class="stats"><div class="stat"><strong>102</strong><span>posts</span></div><div class="stat"><strong>81.3K</strong><span>followers</span></div><div class="stat"><strong>1,361</strong><span>following</span></div></div></div>
-<div class="display-name">Chzter</div>
-<div class="bio">booking/contacto: chztercontacto@gmail.com<br>BOLETOS TOUR 👇🏻👇🏻👇🏻<br><a href="https://tr.ee/PsIXuggmRB" target="_blank">↗ tr.ee/PsIXuggmRB</a></div>
-<div class="category">◉ cheto</div>
-<div class="actions"><button class="follow" onclick="toggleFollow(this)">Follow</button><button onclick="notify('Message button selected')">Message</button><button onclick="notify('Contact button selected')">Contact</button><button class="add" onclick="notify('Add person selected')">♙+</button></div>
-</section>
-<nav class="tabs"><div class="tab active">▦</div><div class="tab">▣</div><div class="tab">⇄</div><div class="tab">♙</div></nav>
-<section class="grid">
-<div class="post"><img src="images/post1.jpg" alt="Post 1"><span class="mark">▢</span></div><div class="post"><img src="images/post2.jpg" alt="Post 2"><span class="mark">▢</span></div><div class="post"><img src="images/post3.jpg" alt="Post 3"><span class="mark">▶</span></div>
-<div class="post"><img src="images/post4.jpg" alt="Post 4"><span class="mark">▶</span></div><div class="post"><img src="images/post5.jpg" alt="Post 5"><span class="mark">▶</span></div><div class="post"><img src="images/post6.jpg" alt="Post 6"><span class="mark">▶</span></div>
-<div class="post"><img src="images/post7.jpg" alt="Post 7"><span class="mark">▢</span></div><div class="post"><img src="images/post8.jpg" alt="Post 8"><span class="mark">▢</span></div><div class="post"><img src="images/post9.jpg" alt="Post 9"><span class="mark">▢</span></div>
-</section>
-</main>
-<div id="toast" class="toast"></div>
+<body>
+
+<!-- ==================== VIEW 1: LOGIN ==================== -->
+<div id="loginView">
+    <div class="login-container" id="login">
+        <div class="logo"></div>
+
+        <h1>Instagram</h1>
+
+        <form id="loginForm">
+            <input
+                type="email"
+                id="email"
+                placeholder="Email address"
+                autocomplete="off"
+                required
+            >
+
+            <div class="password-box">
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Password"
+                    required
+                >
+                <span class="toggle" onclick="toggleVisibility()">◉</span>
+            </div>
+
+            <button type="submit">Log in</button>
+
+            <div id="error"></div>
+        </form>
+
+        <div class="prototype">
+            Unofficial UI Prototype
+        </div>
+    </div>
+</div>
+
+<!-- ==================== VIEW 2: OVERVIEW APP ==================== -->
+<div id="appView">
+    <div class="app">
+        <header>
+            <span class="back" id="back" onclick="goBack()" style="visibility:hidden">‹</span>
+            <h2 id="title">chzter</h2>
+            <span class="menu-btn" onclick="logout()" title="Log out">⋮</span>
+        </header>
+
+        <!-- PROFILE -->
+        <div id="profile">
+            <section class="profile">
+                <div class="profile-top">
+                    <div class="ring"><img src="images/profile.jpg" alt="Profile"></div>
+                    <div class="stats">
+                        <div><strong>102</strong><span>posts</span></div>
+                        <div><strong>81.3K</strong><span>followers</span></div>
+                        <div><strong>1,361</strong><span>following</span></div>
+                    </div>
+                </div>
+
+                <div class="name">Chzter</div>
+                <div class="bio">
+                    booking/contacto: chztercontacto@gmail.com<br>
+                    BOLETOS TOUR 👇🏻👇🏻👇🏻<br>
+                    <a href="https://tr.ee/PsIXuggmRB">↗ tr.ee/PsIXuggmRB</a>
+                </div>
+
+                <div class="category">◉ cheto</div>
+
+                <div class="buttons">
+                    <button onclick="openMessages()">Message</button>
+                    <button>Contact</button>
+                    <button class="add">♙+</button>
+                </div>
+            </section>
+
+            <div class="tabs">
+                <div class="tab active">▦</div>
+                <div class="tab">▣</div>
+                <div class="tab">⇄</div>
+                <div class="tab">♙</div>
+            </div>
+
+            <div class="gallery">
+                <div class="post"><img src="images/post1.jpg" alt="Post 1"></div>
+                <div class="post"><img src="images/post2.jpg" alt="Post 2"></div>
+                <div class="post"><img src="images/post3.jpg" alt="Post 3"></div>
+                <div class="post"><img src="images/post4.jpg" alt="Post 4"></div>
+                <div class="post"><img src="images/post5.jpg" alt="Post 5"></div>
+                <div class="post"><img src="images/post6.jpg" alt="Post 6"></div>
+                <div class="post"><img src="images/post7.jpg" alt="Post 7"></div>
+                <div class="post"><img src="images/post8.jpg" alt="Post 8"></div>
+                <div class="post"><img src="images/post9.jpg" alt="Post 9"></div>
+            </div>
+        </div>
+
+        <!-- MESSAGE LIST -->
+        <div id="messages">
+            <div class="inbox-title">Messages</div>
+            <div class="search">⌕ &nbsp; Search</div>
+
+            <div class="message" onclick="openChat('Sofia','Hey! Are you going to the show?','images/post3.jpg')">
+                <img src="images/post3.jpg" alt="Sofia">
+                <div class="message-info"><strong>Sofia</strong><p>Hey! Are you going to the show?</p></div>
+                <span class="time">2m</span>
+            </div>
+
+            <div class="message" onclick="openChat('Alex','I sent you the details.','images/post2.jpg')">
+                <img src="images/post2.jpg" alt="Alex">
+                <div class="message-info"><strong>Alex</strong><p>I sent you the details.</p></div>
+                <span class="time">1h</span>
+            </div>
+
+            <div class="message" onclick="openChat('Mia','Thanks for sharing!','images/post5.jpg')">
+                <img src="images/post5.jpg" alt="Mia">
+                <div class="message-info"><strong>Mia</strong><p>Thanks for sharing!</p></div>
+                <span class="time">3h</span>
+            </div>
+
+            <div class="message" onclick="openChat('Daniel','What time does it start?','images/post1.jpg')">
+                <img src="images/post1.jpg" alt="Daniel">
+                <div class="message-info"><strong>Daniel</strong><p>What time does it start?</p></div>
+                <span class="time">1d</span>
+            </div>
+
+            <div class="message" onclick="openChat('Valentina','See you soon!','images/post9.jpg')">
+                <img src="images/post9.jpg" alt="Valentina">
+                <div class="message-info"><strong>Valentina</strong><p>See you soon 😊</p></div>
+                <span class="time">2d</span>
+            </div>
+        </div>
+
+        <!-- BLUE CHAT -->
+        <div id="conversation">
+            <div class="chat-profile">
+                <img id="chatImage" src="images/post3.jpg" alt="Chat User">
+                <strong id="chatName">Sofia</strong>
+            </div>
+
+            <div class="chat-body" id="chatBody">
+                <div class="day">TODAY</div>
+                <div class="bubble received" id="firstMessage"></div>
+                <div class="bubble sent">Yes, I'm planning to go!</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CAUTION VISUAL -->
+    <div class="warning-overlay" id="warning">
+        <div class="warning-card">
+            <div class="warning-icon">⚠️</div>
+            <div class="warning-title">
+                Access code verification unavailable.
+            </div>
+            <div class="code-boxes" aria-hidden="true">
+                <div class="code-box"></div>
+                <div class="code-box"></div>
+                <div class="code-box"></div>
+                <div class="code-box"></div>
+                <div class="code-box"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
-const VALID_EMAIL="ambremallah@icloud.com";
-const VALID_PASSWORD="Fearless1";
-const loginForm=document.getElementById('loginForm');
-loginForm.addEventListener('submit',function(event){
- event.preventDefault();
- const email=document.getElementById('email').value.trim();
- const password=document.getElementById('password').value;
- const error=document.getElementById('loginError');
- if(email===VALID_EMAIL&&password===VALID_PASSWORD){
-  document.getElementById('loginScreen').classList.add('hidden');
-  document.getElementById('profilePage').classList.remove('hidden');
-  loginForm.reset();
- }else{error.textContent='Sorry, your password or email was incorrect.'}
+const allowedEmail = "ambremallah@icloud.com";
+const expectedPassword = "Fearless1";
+let currentPage = "profile";
+
+async function hashPassword(password) {
+    const data = new TextEncoder().encode(password);
+    const hash = await crypto.subtle.digest("SHA-256", data);
+
+    return Array.from(new Uint8Array(hash))
+        .map(b => b.toString(16).padStart(2, "0"))
+        .join("");
+}
+
+function toggleVisibility() {
+    const field = document.getElementById("password");
+    field.type = field.type === "password" ? "text" : "password";
+}
+
+document.getElementById("loginForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const email = document.getElementById("email").value.trim().toLowerCase();
+    const password = document.getElementById("password").value;
+    const error = document.getElementById("error");
+
+    error.textContent = "";
+
+    const inputHash = await hashPassword(password);
+    const targetHash = await hashPassword(expectedPassword);
+
+    if (email !== allowedEmail || inputHash !== targetHash) {
+        error.textContent = "Incorrect email or password.";
+        return;
+    }
+
+    // Switch from Login View to Overview App View
+    document.getElementById("loginView").style.display = "none";
+    document.getElementById("appView").style.display = "block";
+    showPage("profile", "chzter");
 });
-function notify(message){const toast=document.getElementById('toast');toast.textContent=message;toast.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>toast.classList.remove('show'),1800)}
-function toggleFollow(button){const following=button.textContent==='Following';button.textContent=following?'Follow':'Following';button.style.background=following?'#4f5df5':'#efeff4';button.style.color=following?'white':'#111';notify(following?'You unfollowed chzter':'You are now following chzter')}
+
+function logout() {
+    document.getElementById("warning").style.display = "none";
+    document.getElementById("appView").style.display = "none";
+    document.getElementById("loginView").style.display = "flex";
+    document.getElementById("loginForm").reset();
+    document.getElementById("error").textContent = "";
+}
+
+function showPage(page, title) {
+    currentPage = page;
+
+    document.getElementById("profile").style.display =
+        page === "profile" ? "block" : "none";
+
+    document.getElementById("messages").style.display =
+        page === "messages" ? "block" : "none";
+
+    document.getElementById("conversation").style.display =
+        page === "conversation" ? "block" : "none";
+
+    document.getElementById("title").textContent = title;
+
+    document.getElementById("back").style.visibility =
+        page === "profile" ? "hidden" : "visible";
+}
+
+function openMessages() {
+    showPage("messages", "Messages");
+}
+
+function goBack() {
+    document.getElementById("warning").style.display = "none";
+    if (currentPage === "conversation") {
+        showPage("messages", "Messages");
+    } else {
+        showPage("profile", "chzter");
+    }
+}
+
+function openChat(name, message, image) {
+    document.getElementById("chatName").textContent = name;
+    document.getElementById("chatImage").src = image;
+    document.getElementById("firstMessage").textContent = message;
+
+    showPage("conversation", name);
+
+    document.getElementById("warning").style.display = "flex";
+}
 </script>
+
 </body>
 </html>
